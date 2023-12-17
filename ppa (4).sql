@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 30 Nov 2023 pada 04.57
+-- Waktu pembuatan: 17 Des 2023 pada 02.23
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.27
 
@@ -42,7 +42,8 @@ CREATE TABLE `akun` (
 
 INSERT INTO `akun` (`idakun`, `idlevel`, `iddepartemen`, `nama`, `NRP`, `password`) VALUES
 (1, 9, 1, 'annisa', '91011121', '$2y$10$OUrDD1UEGgLJm/VFD1fBleJAhV8z/3aslEB30T9.GBSOR3al3tffC'),
-(2, 1, 1, 'regina', '12345678', '$2y$10$TlUy6unE8jMFH53mFYtCqO4qzBU1r6v/vSVO4.Q3oAjeUkELeak3q');
+(2, 1, 1, 'regina', '12345678', '$2y$10$TlUy6unE8jMFH53mFYtCqO4qzBU1r6v/vSVO4.Q3oAjeUkELeak3q'),
+(29, 10, 1, 'ubay', '12312312', '$2y$10$oV2EntNkKL.tl74LQTYWpu.IbxB7mdHnp3DfAscoGUe.pjx8T9xf6');
 
 -- --------------------------------------------------------
 
@@ -102,11 +103,11 @@ CREATE TABLE `laporan` (
   `idjenis` int(11) NOT NULL,
   `kode_surat` varchar(100) NOT NULL,
   `nama_barang` varchar(100) NOT NULL,
-  `jumlah` int(11) NOT NULL,
-  `rincian` varchar(50) NOT NULL,
-  `agenda` varchar(100) NOT NULL,
+  `jumlah` int(40) NOT NULL,
+  `rincian` varchar(100) NOT NULL,
+  `agenda` varchar(50) NOT NULL,
   `tanggal_agenda` date NOT NULL,
-  `NRP` varchar(100) NOT NULL
+  `NRP` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -114,9 +115,8 @@ CREATE TABLE `laporan` (
 --
 
 INSERT INTO `laporan` (`idlaporan`, `idakun`, `idjenis`, `kode_surat`, `nama_barang`, `jumlah`, `rincian`, `agenda`, `tanggal_agenda`, `NRP`) VALUES
-(32, 2, 3, '78654', 'nasi kotak', 2, 'kotak/hari', 'P5M', '2023-11-30', '1234678'),
-(33, 1, 1, '434565', 'minuman', 45, 'gelas/hari', 'P5M', '2023-11-29', '13579246'),
-(34, 2, 1, '1234', 'MINUMAN', 2, 'kotak/hari', 'acara keluarga', '2023-11-30', '12345678');
+(3, 2, 1, '50/HCGA/PPA-GRYA/RKB/XI/2023', 'Minuman', 2, 'dus/hari', 'P5M', '2023-11-29', 12345678),
+(4, 29, 1, '12745732487', 'nasi kuning', 2, 'kotak/hari', 'P5M', '2023-12-17', 12345678);
 
 -- --------------------------------------------------------
 
@@ -168,9 +168,8 @@ ALTER TABLE `jenis_laporan`
 --
 ALTER TABLE `laporan`
   ADD PRIMARY KEY (`idlaporan`),
-  ADD KEY `idakun_2` (`idakun`),
-  ADD KEY `idakun_3` (`idakun`),
-  ADD KEY `idjenis_2` (`idjenis`);
+  ADD KEY `idakun` (`idakun`),
+  ADD KEY `idjenis` (`idjenis`);
 
 --
 -- Indeks untuk tabel `level`
@@ -186,13 +185,13 @@ ALTER TABLE `level`
 -- AUTO_INCREMENT untuk tabel `akun`
 --
 ALTER TABLE `akun`
-  MODIFY `idakun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `idakun` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- AUTO_INCREMENT untuk tabel `departemen`
 --
 ALTER TABLE `departemen`
-  MODIFY `iddepartemen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `iddepartemen` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT untuk tabel `jenis_laporan`
@@ -204,7 +203,7 @@ ALTER TABLE `jenis_laporan`
 -- AUTO_INCREMENT untuk tabel `laporan`
 --
 ALTER TABLE `laporan`
-  MODIFY `idlaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `idlaporan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `level`
@@ -227,8 +226,8 @@ ALTER TABLE `akun`
 -- Ketidakleluasaan untuk tabel `laporan`
 --
 ALTER TABLE `laporan`
-  ADD CONSTRAINT `laporan_ibfk_1` FOREIGN KEY (`idakun`) REFERENCES `akun` (`idakun`),
-  ADD CONSTRAINT `laporan_ibfk_2` FOREIGN KEY (`idjenis`) REFERENCES `jenis_laporan` (`idjenis`);
+  ADD CONSTRAINT `laporan_ibfk_2` FOREIGN KEY (`idakun`) REFERENCES `akun` (`idakun`),
+  ADD CONSTRAINT `laporan_ibfk_3` FOREIGN KEY (`idjenis`) REFERENCES `jenis_laporan` (`idjenis`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
