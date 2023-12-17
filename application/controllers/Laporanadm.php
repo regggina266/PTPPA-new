@@ -8,7 +8,7 @@ class Laporanadm extends CI_Controller
         parent::__construct();
         $this->load->helper('url', 'form', 'download');
         $this->load->model('M_ppa');
-        $this->load->model('m_laporan');
+    $this->load->model('m_laporan');
     }
     public function index()
     {
@@ -21,11 +21,27 @@ class Laporanadm extends CI_Controller
     }
     public function tambah()
     {
-        
-        $data['laporan'] = $this->M_ppa->get_laporan();
+        $data['last'] = $this->M_ppa->get_last_permohonan();
+        $data['nrp'] = $this->session->userdata('NRP');
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/sidebaradm');
         $this->load->view('tambahdatalaporanadm', $data);
+    }
+    public function new_permohonan(){
+        $data['no_surat'] = $this->input->post('no_surat');
+        $data['nrp'] = $this->input->post('nrp');
+        $data['created_date'] = $this->input->post('created_date');
+        $data['catatan'] = $this->input->post('catatan');
+        $data['status'] = $this->input->post('status');
+        $insert_permohonan = $this->M_ppa->insert_new_permohonan($data);
+        // $insert_permohonan = 2;
+        $daftar_item = $this->input->post('daftar_item');
+        foreach ($daftar_item as &$value){
+            $value['id_permohonan'] = $insert_permohonan; 
+        }
+        // adding list item
+        $insert_item = $this->M_ppa->insert_list_item($daftar_item);
+        echo $insert_item;
     }
        public function tambah_barang()
     {

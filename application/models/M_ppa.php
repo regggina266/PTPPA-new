@@ -12,13 +12,26 @@ class M_ppa extends CI_Model
  //Laporan Models
  public function laporan()
  {
-     $this->db->select('laporan.*, akun.nama');
-     $this->db->from('laporan');
-     $this->db->join('akun', 'akun.idakun = laporan.idakun');
- 
+     $this->db->select('permohonan.*, akun.nama, akun.dept' );
+     $this->db->from('permohonan');
+     $this->db->join('akun', 'akun.NRP = permohonan.nrp');
      return $this->db->get()->result(); // Execute the query and return results
  }
- 
+ public function get_last_permohonan(){
+    $this->db->select('id');
+    $this->db->from('permohonan');
+    $this->db->order_by('id', 'DESC');
+    $this->db->limit(1);
+    return $this->db->get()->row();   
+ }
+ public function insert_list_item($data){
+    $query = $this->db->insert_batch('list_item', $data);
+    return $query;
+ }
+ public function insert_new_permohonan($data){
+    $this->db->insert('permohonan', $data);
+    return $this->db->insert_id();
+ }
  public function get_laporan()
  {
      $this->db->select('laporan.*, akun.nama');
