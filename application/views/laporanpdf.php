@@ -84,14 +84,14 @@
         </thead>
         <tbody>
             <?php $no = 1;
-            foreach ($laporan as $laporan) : ?>
+            foreach ($list_item as $list_item) : ?>
                 <tr style="height:300px">
                     <th><?= $no++ ?></th>
-                    <th><?= $laporan->nama_barang ?></th>
-                    <th><?= $laporan->jumlah ?></th>
-                    <th><?= $laporan->rincian ?></th>
-                    <th><?= $laporan->agenda ?></th>
-                    <th><?= $laporan->tanggal_agenda ?></th>
+                    <th><?= $list_item->nama_barang ?></th>
+                    <th><?= $list_item->kuantitas ?></th>
+                    <th><?= $list_item->satuan ?></th>
+                    <th><?= $list_item->agenda ?></th>
+                    <th><?= $list_item->agenda_date ?></th>
                 </tr>
             <?php endforeach ?>
         </tbody>

@@ -29,9 +29,9 @@
                             <li>
                                 <a style="color: #fff !important" href="<?= base_url('departemen') ?>" aria-expanded="true"><i style="color: #fff !important"class="ti-stats-up"></i><span><b>Departemen</b></span></a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a style="color: #fff !important"href="<?= base_url('laporanms') ?>" aria-expanded="true"><i style="color: #fff !important"class="ti-bookmark-alt"><span></i><b>Laporan</b></span><span class="badge badge-danger badge-pill">5</span></a>
-                            </li>
+                            </li> -->
                             <!-- <li>
                                 <a style="color: #fff !important"href="<?= base_url('approval') ?>" aria-expanded="true"><i style="color: #fff !important"class="ti-pencil-alt"><span></i><b>Approval</b></span></a>
                             </li> -->

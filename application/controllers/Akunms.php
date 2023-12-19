@@ -36,28 +36,46 @@ class Akunms extends CI_Controller
         //proses penambahan data akun
         public function tambah_akun()
         {
-            // Retrieve data from the form
-            $dataakun = array(
-                'nama' => $this->input->post('nama'),
-                'NRP' => $this->input->post('NRP'),
-                'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                'idlevel' => $this->input->post('level_k'),
-                'iddepartemen' => $this->input->post('devisi'),
-                // Add more fields if needed
-            );
+            // Load the necessary libraries
+            $this->load->library('upload');
         
-            // Insert data into the 'akun' table using your model method
-            $idakun = $this->M_akun->insert_akun($dataakun);
+            // Configuration for file upload
+            $config['upload_path'] = './uploads/'; // specify the folder where you want to save the uploaded images
+            $config['allowed_types'] = 'gif|jpg|jpeg|png'; // specify the allowed file types
+            $config['max_size'] = 2048; // specify the maximum file size in kilobytes
         
-            // Redirect after adding the account
-            if ($idakun) {
-                // If successful, redirect to a success page or back to the main page
-                redirect('akunms');
+            $this->upload->initialize($config);
+        
+            // Check if the file upload is successful
+            if ($this->upload->do_upload('ttd')) {
+                // Retrieve data from the form including the file name
+                $dataakun = array(
+                    'nama' => $this->input->post('nama'),
+                    'NRP' => $this->input->post('NRP'),
+                    'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+                    'idlevel' => $this->input->post('level_k'),
+                    'iddepartemen' => $this->input->post('devisi'),
+                    'ttd' => $this->upload->data('file_name'), // store the uploaded file name in the database
+                    // Add more fields if needed
+                );
+        
+                // Insert data into the 'akun' table using your model method
+                $idakun = $this->M_akun->insert_akun($dataakun);
+        
+                // Redirect after adding the account
+                if ($idakun) {
+                    // If successful, redirect to a success page or back to the main page
+                    redirect('akunms');
+                } else {
+                    // If not successful, handle the error accordingly
+                    echo "Failed to add the account.";
+                }
             } else {
-                // If not successful, handle the error accordingly
-                echo "Failed to add the account.";
+                // If file upload fails, handle the error accordingly
+                echo $this->upload->display_errors();
             }
         }
+        
         
         public function edit($idakun) {
             $where = array('idakun' => $idakun);
