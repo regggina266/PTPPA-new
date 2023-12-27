@@ -76,7 +76,7 @@
                                 <th><?= $laporan->catatan ?></th>                       
                                 <td style="text-align:center">
                                     <ul class="d-flex justify-content-center">
-                                        <li class="mr-3"><a href="<?php echo base_url('Laporanadm/edit/'. $laporan->id) ?>" class="text-warning"><i class="fa fa-edit"title="Edit"></i></a></li>
+                                        <!-- <li class="mr-3"><a href="<?php echo base_url('Laporanadm/edit/'. $laporan->id) ?>" class="text-warning"><i class="fa fa-edit"title="Edit"></i></a></li> -->
                                         <li class="mr-3"><a href="<?= base_url('Laporanadm/delete/' . $laporan->id); ?>" class="text-danger"><i class="ti-trash" title="Hapus" onClick="return confirm('Yakin Akan Menghapus Data?');"></i></a></li>
                                         <li class="mr-3"><a target="_blank" href="<?php echo base_url('Generate/index/' . $laporan->id); ?>" ><i class="ti-printer" id='idlaporan' title="Print"></i></a></li>
                                     </ul>

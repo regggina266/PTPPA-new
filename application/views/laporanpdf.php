@@ -66,7 +66,7 @@
         <div style="margin-bottom: 60px;">
         <table style="width:100%; border: none; border-collapse: collapse;">
         <tr>
-            <th style="width: 100%; padding: 5px; border: none; text-align: left;">Departemen :<b> HCGA</b></p></b></th>
+            <th style="width: 100%; padding: 5px; border: none; text-align: left;">Departemen :<b><?=$laporan->dept?></b></p></b></th>
             <th style="width: 50%; padding: 10px; border: none; ">Tanggal :<b><?=$laporan->created_date?></b></th>
         </tr>
         <tr>
@@ -87,14 +87,14 @@
         </thead>
         <tbody>
             <?php $no = 1;
-            foreach ($list_item as $list_item) : ?>
+            foreach ($list_item as $item) : ?>
                 <tr style="height:300px">
                     <th><?= $no++ ?></th>
-                    <th><?= $list_item->nama_barang ?></th>
-                    <th><?= $list_item->kuantitas ?></th>
-                    <th><?= $list_item->satuan ?></th>
-                    <th><?= $list_item->agenda ?></th>
-                    <th><?= $list_item->agenda_date ?></th>
+                    <th><?= $item->nama_barang ?></th>
+                    <th><?= $item->kuantitas ?></th>
+                    <th><?= $item->satuan ?></th>
+                    <th><?= $item->agenda ?></th>
+                    <th><?= $item->agenda_date ?></th>
                 </tr>
             <?php endforeach ?>
         </tbody>

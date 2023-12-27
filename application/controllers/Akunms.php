@@ -34,53 +34,37 @@ class Akunms extends CI_Controller
         }
 
         //proses penambahan data akun
-        public function tambah_akun()
-        {
-            // Load the necessary libraries
-            $this->load->library('upload');
-        
-            // Configuration for file upload
-            $config['upload_path'] = './uploads/'; // specify the folder where you want to save the uploaded images
-            $config['allowed_types'] = 'gif|jpg|jpeg|png'; // specify the allowed file types
-            $config['max_size'] = 2048; // specify the maximum file size in kilobytes
-        
-            $this->upload->initialize($config);
-        
-            // Check if the file upload is successful
-            if ($this->upload->do_upload('ttd')) {
-                // Retrieve data from the form including the file name
-                $dataakun = array(
-                    'nama' => $this->input->post('nama'),
-                    'NRP' => $this->input->post('NRP'),
-                    'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                    'idlevel' => $this->input->post('level_k'),
-                    'iddepartemen' => $this->input->post('devisi'),
-                    'ttd' => $this->upload->data('file_name'), // store the uploaded file name in the database
-                    // Add more fields if needed
-                );
-        
-                // Insert data into the 'akun' table using your model method
-                $idakun = $this->M_akun->insert_akun($dataakun);
-        
-                // Redirect after adding the account
-                if ($idakun) {
-                    // If successful, redirect to a success page or back to the main page
-                    redirect('akunms');
-                } else {
-                    // If not successful, handle the error accordingly
-                    echo "Failed to add the account.";
-                }
-            } else {
-                // If file upload fails, handle the error accordingly
-                echo $this->upload->display_errors();
-            }
-        }
-        
+       // Controller (Akunms.php)
+
+       public function tambah_akun()
+       {
+           // Retrieve data from the form
+           $dataakun = array(
+               'nama' => $this->input->post('nama'),
+               'NRP' => $this->input->post('NRP'),
+               'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
+               'idlevel' => $this->input->post('level_k'),
+               'iddepartemen' => $this->input->post('devisi'),
+               // Add more fields if needed
+           );
+       
+           // Insert data into the 'akun' table using your model method
+           $idakun = $this->M_akun->insert_akun($dataakun);
+       
+           // Redirect after adding the account
+           if ($idakun) {
+               // If successful, redirect to a success page or back to the main page
+               redirect('akunadm');
+           } else {
+               // If not successful, handle the error accordingly
+               echo "Failed to add the account.";
+           }
+       }
         
         public function edit($idakun) {
             $where = array('idakun' => $idakun);
             $data['akun'] = $this->M_akun->get_akun_by_id($where); 
-            $this->load->view('Templates/header');
+            $this->load->view('Templates/header', $data);
             $this->load->view('Templates/sidebarms');
             $this->load->view('editakunms', $data);
             //print_r($data['akun']);
@@ -97,24 +81,23 @@ class Akunms extends CI_Controller
                 'iddepartemen' => $this->input->post('devisi'),
                 'NRP' => $this->input->post('NRP'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                
-        );
+            );
     
         // Update the 'akun' record based on 'idakun'
-        $where = array('idakun' => $idakun);
-        $result = $this->M_akun->update_akun($where, $dataakun);
-    
-        if ($result) {
-            // If the update was successful, redirect to a success page or perform other actions
-            echo "Data akun berhasil diperbarui.";
-            // Redirect to a success page or appropriate location
-            redirect('akunms');
-        } else {
-            // If the update failed, show an error message or perform other actions
-            echo "Gagal memperbarui data akun.";
-            // Redirect to an error page or appropriate location
-            redirect('akunms/edit/' . $idakun); // Redirect back to edit page
-        }
+            $where = array('idakun' => $idakun);
+            $result = $this->M_akun->update_akun($where, $dataakun);
+        
+            if ($result) {
+                // If the update was successful, redirect to a success page or perform other actions
+                echo "Data akun berhasil diperbarui.";
+                // Redirect to a success page or appropriate location
+                redirect('akunadm');
+            } else {
+                // If the update failed, show an error message or perform other actions
+                echo "Gagal memperbarui data akun.";
+                // Redirect to an error page or appropriate location
+                redirect('akunadm' . $idakun); // Redirect back to edit page
+            }
     }
     
     // -- method menghapus data produk -- //
@@ -123,9 +106,9 @@ class Akunms extends CI_Controller
         $this->M_akun->delete($idakun);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('delete', ' Data akun berhasil dihapus.');
-            redirect('akunms');
+            redirect('akunadm');
         } else {
-            redirect('akunms');
+            redirect('akunadm');
         }
     }
 }

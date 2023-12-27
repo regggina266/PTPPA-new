@@ -4,11 +4,7 @@
 <head>
    
 </head>
-<body class="hold-transition sidebar-mini layout-fixed">
-<div class="wrapper">
-        <!-- Navbar -->
-        <?php $this->load->view("Templates/navbar.php") ?>
-        <!-- /.navbar -->
+
 
 
 <div class="main-content-inner">
