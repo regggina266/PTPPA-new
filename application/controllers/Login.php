@@ -37,6 +37,7 @@ class Login extends CI_Controller
         // fungsi ini bersifat privasi, agar tidak bisa di akses di url, hanya di fungsi yang memanggil saja
         $NRP = $this->input->post('NRP');
         $password = $this->input->post('password');
+        
         //Mencari di databse
         //fungsi row_array agar tidak semua record terpanggil, hanya record yang di tentukan saja
         $pengguna = $this->db->get_where('akun', ['NRP' => $NRP])->row_array();
@@ -49,6 +50,7 @@ class Login extends CI_Controller
                 $data = [
                     'NRP' => $pengguna['NRP'],
                     'idlevel' => $pengguna['idlevel'],
+                    
                     //'nama' => $pengguna['nama'],
                 ];
                 $this->session->set_userdata($data);

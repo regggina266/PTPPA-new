@@ -131,9 +131,9 @@ class Laporanadm extends CI_Controller
 
 
      // -- method menghapus data produk -- //
-    public function delete($idbarang)
+    public function delete($id)
     {
-        $this->m_laporan->delete($idbarang);
+        $this->m_laporan->delete($id);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('delete', ' Data laporan berhasil dihapus.');
             redirect('laporanadm');

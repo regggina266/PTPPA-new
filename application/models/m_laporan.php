@@ -9,10 +9,10 @@ class m_laporan extends CI_Model
         return $this->db->update('tb_barang', $data);
     }
  // -- Delete data produk -- //
-    public function delete($idbarang)
+    public function delete($id)
     {
-        $this->db->where('idbarang', $idbarang);
-        return $this->db->delete('tb_barang');
+        $this->db->where('id', $id);
+        return $this->db->delete('permohonan');
     }
 
     public function get_akun() {

@@ -46,8 +46,11 @@
                                             </div>
                                             <!-- <label for="photo">Photo:</label>
                                             <input type="file" name="photo" id="photo"></input> -->
+                                                <!-- <div class="form-group">
+                                                    <label for="example-file-input" class="col-form-label">Photo</label>
+                                                    <input type="file" class="form-control" id="example-file-input" name="ttd" required>
+                                                </div>                             --> 
                                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
-
                                             <button type="submit" value="simpan" class="btn btn-primary btn-sm">Simpan</button>
                                         </form>
                                     </div>

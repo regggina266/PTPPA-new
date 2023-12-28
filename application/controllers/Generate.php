@@ -19,15 +19,14 @@ class Generate extends CI_Controller
         $orientation = "portrait";
         
         // Ambil data dari model Permohonan_model
-        $data['laporan'] = $this->M_ppa->get_data_by_id('permohonan', $id)->result();
+        $data['laporan'] = $this->M_ppa->get_data_by_id('permohonan', $id)->row();        
         $data['list_item'] = $this->M_ppa->get_data_by_id('list_item', $id)->result();
+        // Mengambil data list_item secara langsung
+        $data['akun'] = $this->M_ppa->get_data_akun('akun', $id)->row();
         // // Ambil data dari model List_item_model
         // $data['list_item'] = $this->M_ppa->get_data('list_item')->result();
         
         $html = $this->load->view('laporanpdf', $data, true);
         $this->pdfgenerator->generate($html, $file_pdf, $paper, $orientation);
     }
-
-
-   
 }

@@ -75,7 +75,7 @@ class Akunms extends CI_Controller
         public function edit($idakun) {
             $where = array('idakun' => $idakun);
             $data['akun'] = $this->M_akun->get_akun_by_id($where); 
-            $this->load->view('Templates/header');
+            $this->load->view('Templates/header', $data);
             $this->load->view('Templates/sidebarms');
             $this->load->view('editakunms', $data);
             //print_r($data['akun']);
@@ -92,24 +92,23 @@ class Akunms extends CI_Controller
                 'iddepartemen' => $this->input->post('devisi'),
                 'NRP' => $this->input->post('NRP'),
                 'password' => password_hash($this->input->post('password'), PASSWORD_DEFAULT),
-                
-        );
+            );
     
         // Update the 'akun' record based on 'idakun'
-        $where = array('idakun' => $idakun);
-        $result = $this->M_akun->update_akun($where, $dataakun);
-    
-        if ($result) {
-            // If the update was successful, redirect to a success page or perform other actions
-            echo "Data akun berhasil diperbarui.";
-            // Redirect to a success page or appropriate location
-            redirect('akunms');
-        } else {
-            // If the update failed, show an error message or perform other actions
-            echo "Gagal memperbarui data akun.";
-            // Redirect to an error page or appropriate location
-            redirect('akunms/edit/' . $idakun); // Redirect back to edit page
-        }
+            $where = array('idakun' => $idakun);
+            $result = $this->M_akun->update_akun($where, $dataakun);
+        
+            if ($result) {
+                // If the update was successful, redirect to a success page or perform other actions
+                echo "Data akun berhasil diperbarui.";
+                // Redirect to a success page or appropriate location
+                redirect('akunadm');
+            } else {
+                // If the update failed, show an error message or perform other actions
+                echo "Gagal memperbarui data akun.";
+                // Redirect to an error page or appropriate location
+                redirect('akunadm' . $idakun); // Redirect back to edit page
+            }
     }
     
     // -- method menghapus data produk -- //
@@ -118,9 +117,9 @@ class Akunms extends CI_Controller
         $this->M_akun->delete($idakun);
         if ($this->db->affected_rows() > 0) {
             $this->session->set_flashdata('delete', ' Data akun berhasil dihapus.');
-            redirect('akunms');
+            redirect('akunadm');
         } else {
-            redirect('akunms');
+            redirect('akunadm');
         }
     }
 }

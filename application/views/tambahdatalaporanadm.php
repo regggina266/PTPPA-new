@@ -137,7 +137,7 @@
       border-bottom: 0.05em solid rgb(230, 230, 230);
    }
 
-   .tiitem button:hover {
+   .tiitem button:hover, .loadingbox a:hover {
       background: #0052b0;
    }
 
@@ -177,6 +177,46 @@
       color: #FF0060;
       cursor: pointer;
    }
+   @keyframes showup{
+      from {opacity: 0; transform: translateY(0.5em)}
+      to {opacity: 1; transform: translateY(0em)}
+   }
+   .loadingbox{
+      position: fixed;
+      top: 0;
+      left: 0;
+      background: rgba(30,30,30, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      backdrop-filter: blur(0.5em);
+      width: 100%;
+      height: 100%;
+      z-index: 1000;
+   }
+   .loadingbox>div{
+      transition: all 0.3s;
+      padding: 2.5em;
+      animation: showup 1s ease;
+      border-radius: 0.7em;
+      text-align: center;
+      background: white;
+   }
+   .loadingbox h5{
+      font-size: 1.7em;
+      margin-bottom: 0.5em;
+   }
+   .loadingbox p{
+      font-size: 1.2em;
+   }
+   .loadingbox a {
+      padding: 0.9em;
+      display: block;
+      background: #0079FF;
+      color:white;
+      margin-top: 2em;
+      border-radius: 0.4em;
+   }
 </style>
 
 <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
@@ -213,6 +253,7 @@
       }
       const [listItem, setListItem] = useState([])
       const [catatan, setCatatan] = useState('')
+      const [success, setSuccess] = useState(false)
       const [item, setItem] = useState(initialVal)
       const [showForm, setShowForm] = useState(false)
       const inputref = useRef()
@@ -241,7 +282,9 @@
                method: 'POST',
                data: request,
                success: data => {
-                  console.log(data)
+                  if(data > 0){
+                     setSuccess(true)
+                  }
                }
             })
          }
@@ -271,6 +314,17 @@
       }, [listItem])
       return (
          <div className="wrappers">
+            { /* pesan berhasil simpan pengajuan */
+               success ? (
+                  <div className="loadingbox">
+                     <div>
+                        <h5>Berhasil Disimpan</h5>
+                        <p>Permohon berhasil di-submit, Terima kasih.</p>
+                        <a href="<?=base_url()?>Laporanadm">Selesai</a>
+                     </div>
+                  </div>
+               ) : false
+            }
             <div className="header">
                <h3><i className="fa-solid fa-cart-plus"></i> Pengajuan Baru </h3>
             </div>

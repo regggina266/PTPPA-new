@@ -9,59 +9,59 @@ class M_ppa extends CI_Model
         return $this->db->get($table);
     }
 
- //Laporan Models
- public function laporan()
- {
-     $this->db->select('permohonan.*, akun.nama, akun.dept' );
-     $this->db->from('permohonan');
-     $this->db->join('akun', 'akun.NRP = permohonan.nrp');
-     return $this->db->get()->result(); // Execute the query and return results
- }
- public function get_last_permohonan(){
-    $this->db->select('id');
-    $this->db->from('permohonan');
-    $this->db->order_by('id', 'DESC');
-    $this->db->limit(1);
-    return $this->db->get()->row();   
- }
- public function insert_list_item($data){
-    $query = $this->db->insert_batch('list_item', $data);
-    return $query;
- }
- public function insert_new_permohonan($data){
-    $this->db->insert('permohonan', $data);
-    return $this->db->insert_id();
- }
- public function get_laporan()
- {
-     $this->db->select('laporan.*, akun.nama');
-     $this->db->from('laporan');
-     $this->db->join('akun', 'akun.idakun = laporan.idakun');
+    //Laporan Models
+    public function laporan()
+    {
+        $this->db->select('permohonan.*, akun.nama, akun.dept' );
+        $this->db->from('permohonan');
+        $this->db->join('akun', 'akun.NRP = permohonan.nrp');
+        return $this->db->get()->result(); // Execute the query and return results
+    }
+    public function get_last_permohonan(){
+        $this->db->select('id');
+        $this->db->from('permohonan');
+        $this->db->order_by('id', 'DESC');
+        $this->db->limit(1);
+        return $this->db->get()->row();   
+    }
+    public function insert_list_item($data){
+        $query = $this->db->insert_batch('list_item', $data);
+        return $query;
+    }
+    public function insert_new_permohonan($data){
+        $this->db->insert('permohonan', $data);
+        return $this->db->insert_id();
+    }
+    public function get_laporan()
+    {
+        $this->db->select('laporan.*, akun.nama');
+        $this->db->from('laporan');
+        $this->db->join('akun', 'akun.idakun = laporan.idakun');
+    
+        return $this->db->get()->result_array(); // Execute the query and return results as an array
+    }
  
-     return $this->db->get()->result_array(); // Execute the query and return results as an array
- }
- 
- public function data_idlap($where)
- {
-     $this->db->select('laporan.*, akun.nama');
-     $this->db->from('laporan');
-     $this->db->join('akun', 'akun.idakun = laporan.idakun');
-     $this->db->where($where);
-     $query = $this->db->get();
-     return $query->result(); // Execute the query and return results
- }
- 
- public function insert_laporan($data)
- {
-     $this->db->insert('laporan', $data);
-     return $this->db->insert_id();
- }
- 
- public function updatelaporan($where, $data, $table)
- {
-     $this->db->where($where);
-     $this->db->update($table, $data);
- }
+    public function data_idlap($where)
+    {
+        $this->db->select('laporan.*, akun.nama');
+        $this->db->from('laporan');
+        $this->db->join('akun', 'akun.idakun = laporan.idakun');
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->result(); // Execute the query and return results
+    }
+    
+    public function insert_laporan($data)
+    {
+        $this->db->insert('laporan', $data);
+        return $this->db->insert_id();
+    }
+    
+    public function updatelaporan($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
  
 //Level Model
 
@@ -145,34 +145,13 @@ class M_ppa extends CI_Model
     }
 
     public function data_idbar($where)
- {
-     $this->db->select('tb_barang.*, akun.nama');
-     $this->db->from('tb_barang');
-     $this->db->join('akun', 'akun.idakun = tb_barang.idakun');
-     $this->db->where($where);
-     $query = $this->db->get();
-     return $query->result(); // Execute the query and return results
- }
-
-
- public function updatebarang($where, $data, $table)
- {
-     $this->db->where($where);
-     $this->db->update($table, $data);
- }
- 
- public function insert_barang($data)
- {
-     $this->db->insert('tb_barang', $data);
-     return $this->db->insert_id();
- }
-
- public function departemen()
     {
-        $this->db->select('*');
-        $this->db->from('departemen');
-
-        return $this->db->get();
+        $this->db->select('tb_barang.*, akun.nama');
+        $this->db->from('tb_barang');
+        $this->db->join('akun', 'akun.idakun = tb_barang.idakun');
+        $this->db->where($where);
+        $query = $this->db->get();
+        return $query->result(); // Execute the query and return results
     }
     
     public function get_data_by_id($table, $id) {
@@ -182,4 +161,43 @@ class M_ppa extends CI_Model
     
 
 
+
+    public function updatebarang($where, $data, $table)
+    {
+        $this->db->where($where);
+        $this->db->update($table, $data);
+    }
+    
+    public function insert_barang($data)
+    {
+        $this->db->insert('tb_barang', $data);
+        return $this->db->insert_id();
+    }
+
+    public function departemen()
+        {
+            $this->db->select('*');
+            $this->db->from('departemen');
+
+            return $this->db->get();
+        }
+    
+    public function get_data_by_id($table, $id) {
+        if($table == 'permohonan'){
+            $this->db->select('*');
+            $this->db->from('permohonan');
+            $this->db->join('akun', 'akun.NRP = permohonan.nrp');
+            $this->db->where('permohonan.id', $id);
+        } else if($table == 'list_item'){
+            $this->db->select('*');
+            $this->db->from('list_item');
+            $this->db->where('id_permohonan', $id);
+        }
+        // $this->db->query('SELECT la.*, ak.* FROM permohonan la left join akun ak on la.nrp = ak.NRP where la.id = 1');
+        return $this->db->get();
+    }
+    public function get_data_akun($table, $id) {
+        $this->db->where('idakun', $id);
+        return $this->db->get($table);
+    }
 }
