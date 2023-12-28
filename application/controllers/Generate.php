@@ -6,28 +6,28 @@ class Generate extends CI_Controller
     function __construct()
     {
         parent::__construct();
-        
+        $this->load->model('M_ppa');
     }
     
-    function index()
+    function index($id)
     {
-        
         $this->load->library('pdfgenerator');
         
-        // Title/judul website (apabila nama file ingin di generate otomatis dari title/judul website
         $data['title'] = "Laporan RKB";
-        // Nama file PDF yang nantinya akan di generate
         $file_pdf = $data['title'];
-        // Ukuran kertas/PDF
         $paper = 'A4';
-        //layout file PDF (landscape atau potrait)
         $orientation = "portrait";
-        $result=$this->M_ppa->get_data('laporan')->result();
-        $data['laporan'] = $result;
-        // $data['nosurat'] =$result->kode_surat;
+        
+        // Ambil data dari model Permohonan_model
+        $data['laporan'] = $this->M_ppa->get_data_by_id('permohonan', $id)->result();
+        $data['list_item'] = $this->M_ppa->get_data_by_id('list_item', $id)->result();
+        // // Ambil data dari model List_item_model
+        // $data['list_item'] = $this->M_ppa->get_data('list_item')->result();
+        
         $html = $this->load->view('laporanpdf', $data, true);
         $this->pdfgenerator->generate($html, $file_pdf, $paper, $orientation);
-
     }
+
+
    
 }

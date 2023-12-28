@@ -39,7 +39,13 @@
                                                         <option value="<?= $departemen['iddepartemen'] ?>"><?= $departemen['devisi'] ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
-                                            </div>                                          
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="exampleInputPassword1">Photo TTD</label>
+                                                <input type="file" class="form-control" id="photo" name="ttd" required placeholder="photo ttd">
+                                            </div>
+                                            <!-- <label for="photo">Photo:</label>
+                                            <input type="file" name="photo" id="photo"></input> -->
                                             <input type="hidden" name="<?= $this->security->get_csrf_token_name(); ?>" value="<?= $this->security->get_csrf_hash(); ?>">
 
                                             <button type="submit" value="simpan" class="btn btn-primary btn-sm">Simpan</button>
@@ -83,5 +89,4 @@
     <script src="<?= base_url('')?>assets/js/plugins.js"></script>
     <script src="<?= base_url('')?>assets/js/scripts.js"></script>
 </body>
-
 </html>

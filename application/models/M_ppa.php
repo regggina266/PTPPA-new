@@ -174,5 +174,12 @@ class M_ppa extends CI_Model
 
         return $this->db->get();
     }
+    
+    public function get_data_by_id($table, $id) {
+        $this->db->where('id', $id);
+        return $this->db->get($table);
+    }
+    
+
 
 }
