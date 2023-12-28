@@ -13,6 +13,8 @@ class Laporanadm extends CI_Controller
     public function index()
     {
         $data['laporan'] = $this->M_ppa->laporan();
+        $data['last'] = $this->M_ppa->get_last_permohonan();
+        $data['nrp'] = $this->session->userdata('NRP');
         $this->load->view('Templates/header', $data);
         $this->load->view('Templates/navbar');
         $this->load->view('Templates/sidebaradm');
