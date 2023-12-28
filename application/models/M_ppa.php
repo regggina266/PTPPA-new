@@ -154,10 +154,10 @@ class M_ppa extends CI_Model
         return $query->result(); // Execute the query and return results
     }
     
-    public function get_data_by_id($table, $id) {
-        $this->db->where('id', $id);
-        return $this->db->get($table);
-    }
+    // public function get_data_by_id($table, $id) {
+    //     $this->db->where('id', $id);
+    //     return $this->db->get($table);
+    // }
     
 
 
@@ -182,7 +182,8 @@ class M_ppa extends CI_Model
             return $this->db->get();
         }
     
-    public function get_data_by_id($table, $id) {
+    public function get_data_by_id($table, $id) 
+    {
         if($table == 'permohonan'){
             $this->db->select('*');
             $this->db->from('permohonan');
