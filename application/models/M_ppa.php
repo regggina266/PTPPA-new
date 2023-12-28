@@ -18,9 +18,9 @@ class M_ppa extends CI_Model
         return $this->db->get()->result(); // Execute the query and return results
     }
     public function get_last_permohonan(){
-        $this->db->select('id');
+        $this->db->select('id_permohonan');
         $this->db->from('permohonan');
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('id_permohonan', 'DESC');
         $this->db->limit(1);
         return $this->db->get()->row();   
     }
