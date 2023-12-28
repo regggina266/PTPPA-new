@@ -188,7 +188,7 @@ class M_ppa extends CI_Model
             $this->db->select('*');
             $this->db->from('permohonan');
             $this->db->join('akun', 'akun.NRP = permohonan.nrp');
-            $this->db->where('permohonan.id', $id);
+            $this->db->where('permohonan.id_permohonan', $id);
         } else if($table == 'list_item'){
             $this->db->select('*');
             $this->db->from('list_item');
