@@ -343,8 +343,19 @@
                                             <td><?= $laporan->catatan ?></td>                       
                                             <td style={{textAlign:'center'}}>
                                                 <ul className="d-flex justify-content-center">
-                                                    {/*<li className="mr-3"><a href="<?php echo base_url('Laporanadm/edit/'. $laporan->id) ?>" className="text-warning"><i className="fa fa-edit"title="Edit"></i></a></li> */}
-                                                    <li className="mr-3"><a href="<?= base_url('Laporanadm/delete/' . $laporan->id); ?>" className="text-danger"><i className="ti-trash" title="Hapus" onClick={() => window.confirm('Yakin Akan Menghapus Data?')}></i></a></li>
+                                                    <li className="mr-3"><a href="<?php echo base_url('Laporanadm/edit/'. $laporan->id) ?>" className="text-warning"><i className="fa fa-edit"title="Edit"></i></a></li>
+                                                    <li className="mr-3">
+                                                        <a
+                                                            onClick={() => {
+                                                                let confirm = window.confirm('Yakin Akan Menghapus Data?')
+                                                                if(confirm){
+                                                                    window.location.href = "<?= base_url('Laporanadm/delete/' . $laporan->id); ?>"        
+                                                                }
+                                                            }} 
+                                                            className="text-danger">
+                                                            <i className="ti-trash" title="Hapus"></i>
+                                                        </a>
+                                                    </li>
                                                     <li className="mr-3"><a target="_blank" href="<?php echo base_url('Generate/index/' . $laporan->id); ?>" ><i className="ti-printer" id='idlaporan' title="Print"></i></a></li>
                                                 </ul>
                                             </td>
