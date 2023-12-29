@@ -181,7 +181,22 @@ class M_ppa extends CI_Model
 
             return $this->db->get();
         }
-    
+    public function get_detail_permohonan($id){
+        $this->db->select('*');
+        $this->db->from('permohonan');
+        $this->db->join('list_item', 'list_item.id_permohonan = permohonan.id_permohonan');
+        $this->db->where('permohonan.id_permohonan', $id);
+        return $this->db->get()->result();
+    }
+    public function update_permohonan($id, $catatan){
+        $this->db->set('catatan', $catatan);
+        $this->db->where('id_permohonan', $id);
+        return $this->db->update('permohonan');
+    }
+    public function delete_list_item($id){
+        $this->db->where('id_permohonan', $id);
+        return $this->db->delete('list_item');
+    }
     public function get_data_by_id($table, $id) 
     {
         if($table == 'permohonan'){

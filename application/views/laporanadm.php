@@ -226,6 +226,9 @@
         margin-top: 2em;
         border-radius: 0.4em;
     }
+    a{
+        cursor: pointer;
+    }
     .outerwrapps{
         width: 100%;
         top: 0;
@@ -271,6 +274,7 @@
     const { useState, useEffect, useRef } = React
     const App = () => {
         const [showModalAdd, setShowModalAdd] = useState(false)
+        const [editPermohonan, setEditPermohonan] = useState(null)
         return (
             <div className="content-wrapper">
                 {/* Content Header (Page header) */}
@@ -343,9 +347,12 @@
                                             <td><?= $laporan->catatan ?></td>                       
                                             <td style={{textAlign:'center'}}>
                                                 <ul className="d-flex justify-content-center">
-                                                    <li className="mr-3"><a href="<?php echo base_url('Laporanadm/edit/'. $laporan->id_permohonan) ?>" className="text-warning"><i className="fa fa-edit"title="Edit"></i></a></li>
+                                                    <li className="mr-3">
+                                                        <a onClick={() => setEditPermohonan('<?=$laporan->id_permohonan?>')} className="text-warning"><i className="fa fa-edit"title="Edit"></i></a>
+                                                    </li>
                                                     <li className="mr-3">
                                                         <a
+                                                            href="#"
                                                             onClick={() => {
                                                                 let confirm = window.confirm('Yakin Akan Menghapus Data?')
                                                                 if(confirm){
@@ -368,7 +375,15 @@
                     </div>
                 </div>
                 {/* tambah pengajuan */}
-                {showModalAdd ? <ModalAddPengajuan close={() => setShowModalAdd(false)}/> : false}
+                {showModalAdd || editPermohonan != null ? 
+                    <ModalAddPengajuan 
+                        edit={editPermohonan}
+                        close={() => {
+                            setShowModalAdd(false)
+                            setEditPermohonan(null)
+                        }}
+                    /> 
+                : false}
                 
             </div>
         )
@@ -377,7 +392,7 @@
     const root = ReactDOM.createRoot(el)
     root.render(<App />)
     // modal tambah pengajuan
-    const ModalAddPengajuan = ({close}) => {
+    const ModalAddPengajuan = ({close, edit}) => {
         const id = '<?=$last->id_permohonan?>'
         const nrp = '<?=$nrp?>'
         let initialVal = {
@@ -388,6 +403,7 @@
             agenda_date: '',
         }
         const [listItem, setListItem] = useState([])
+        const [detailEditPermohonan, setDetailEditPermohonan] = useState(null)
         const [catatan, setCatatan] = useState('')
         const [success, setSuccess] = useState(false)
         const [item, setItem] = useState(initialVal)
@@ -439,11 +455,12 @@
                     created_date: new Date().toLocaleDateString('fr-CA'),
                     catatan,
                     status: 1
-                    }
-                    request.daftar_item = listItem.map(it => ({...it, id_permohonan: ''}) )
-                    // post data
-                    $.ajax({
-                    url: `<?=base_url()?>/Laporanadm/new_permohonan`,
+                }
+                request.daftar_item = listItem.map(it => ({...it, id_permohonan: ''}) )
+                request.id_p = edit ? edit : '-'
+                // post data
+                $.ajax({
+                    url: edit ? `<?=base_url()?>/Laporanadm/update_permohonan` : `<?=base_url()?>/Laporanadm/new_permohonan`,
                     method: 'POST',
                     data: request,
                     success: data => {
@@ -477,8 +494,34 @@
                 })
             }, 200)
         }, [listItem])
+        // jika update permohonan munculkan modal dengan mendapatkan detail permohonan terlebih dahulu
+        useEffect(() => {
+            if(edit != null){
+                $.ajax({
+                    url: `<?=base_url()?>/laporanadm/getdetail/${edit}`,
+                    method: 'GET',
+                    success: res => {
+                        let data = JSON.parse(res)
+                        if(data.length){
+                            setDetailEditPermohonan(data[0])
+                            setCatatan(data[0].catatan)
+                            setListItem(data.map(it => ({
+                                nama_barang: it.nama_barang,
+                                kuantitas: it.kuantitas,
+                                satuan: it.satuan,
+                                agenda: it.agenda,
+                                agenda_date: it.agenda_date
+                            })))
+                        }
+                    }
+                })
+            }
+        }, [])
         return (
-            <div className="outerwrapps" onClick={e => e.target.className == 'outerwrapps' ? close() : false}>
+            <div 
+                className="outerwrapps" 
+                onClick={e => e.target.className == 'outerwrapps' ? close() : false}
+            >
                 <div className="wrappers">
                     { /* pesan berhasil simpan pengajuan */
                     success ? (
@@ -498,7 +541,13 @@
                     <div className="box">
                         <h4>Informasi Permohonan</h4>
                     <div className="nosurat">
-                        <p className="textsurat">{parseInt(id)+1}/HCGA/PPA-GRYA/RKB/{getMonth(new Date().getMonth() + 1)}/{new Date().getFullYear()}</p>
+                        { /* jika muncul form edit atau tambah */
+                            edit ? (
+                                <p>{detailEditPermohonan ? detailEditPermohonan.no_surat: '-'}</p>
+                            ) : (
+                                <p className="textsurat">{parseInt(id)+1}/HCGA/PPA-GRYA/RKB/{getMonth(new Date().getMonth() + 1)}/{new Date().getFullYear()}</p>
+                            )
+                        }
                     </div>
                     <div className="flex">
                         <div className="formsec">

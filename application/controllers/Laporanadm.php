@@ -45,6 +45,26 @@ class Laporanadm extends CI_Controller
         $insert_item = $this->M_ppa->insert_list_item($daftar_item);
         echo $insert_item;
     }
+    public function getdetail(){
+        $id = $this->uri->segment('3');
+        $data = $this->M_ppa->get_detail_permohonan($id);
+        echo json_encode($data);
+    }
+
+    public function update_permohonan(){
+        $id = $this->input->post('id_p');
+        $catatan = $this->input->post('catatan');
+        $updatepermohonan = $this->M_ppa->update_permohonan($id, $catatan);
+        $deleteitem = $this->M_ppa->delete_list_item($id);
+        // adding list item
+        $daftar_item = $this->input->post('daftar_item');
+        foreach ($daftar_item as &$value){
+            $value['id_permohonan'] = $id; 
+        }
+        $insert_item = $this->M_ppa->insert_list_item($daftar_item);
+        echo $insert_item;
+    }
+
        public function tambah_barang()
     {
         // Mengambil data dari formulir input
