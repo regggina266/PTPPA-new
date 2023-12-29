@@ -87,14 +87,14 @@
         </thead>
         <tbody>
             <?php $no = 1;
-            foreach ($list_item as $item) : ?>
+            foreach ($list_item as $list_item) : ?>
                 <tr style="height:300px">
                     <th><?= $no++ ?></th>
-                    <th><?= $item->nama_barang ?></th>
-                    <th><?= $item->kuantitas ?></th>
-                    <th><?= $item->satuan ?></th>
-                    <th><?= $item->agenda ?></th>
-                    <th><?= $item->agenda_date ?></th>
+                    <th><?= $list_item->nama_barang ?></th>
+                    <th><?= $list_item->kuantitas ?></th>
+                    <th><?= $list_item->satuan ?></th>
+                    <th><?= $list_item->agenda ?></th>
+                    <th><?= $list_item->agenda_date ?></th>
                 </tr>
             <?php endforeach ?>
         </tbody>

@@ -25,4 +25,6 @@ class m_laporan extends CI_Model
             return array(); // Return empty array if no department data found
         }
     }
+
+  
 }

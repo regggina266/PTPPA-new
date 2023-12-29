@@ -18,9 +18,9 @@ class M_ppa extends CI_Model
         return $this->db->get()->result(); // Execute the query and return results
     }
     public function get_last_permohonan(){
-        $this->db->select('id');
+        $this->db->select('id_permohonan');
         $this->db->from('permohonan');
-        $this->db->order_by('id', 'DESC');
+        $this->db->order_by('id_permohonan', 'DESC');
         $this->db->limit(1);
         return $this->db->get()->row();   
     }
@@ -153,6 +153,13 @@ class M_ppa extends CI_Model
         $query = $this->db->get();
         return $query->result(); // Execute the query and return results
     }
+    
+    // public function get_data_by_id($table, $id) {
+    //     $this->db->where('id', $id);
+    //     return $this->db->get($table);
+    // }
+    
+
 
 
     public function updatebarang($where, $data, $table)
@@ -174,13 +181,29 @@ class M_ppa extends CI_Model
 
             return $this->db->get();
         }
-    
-    public function get_data_by_id($table, $id) {
+    public function get_detail_permohonan($id){
+        $this->db->select('*');
+        $this->db->from('permohonan');
+        $this->db->join('list_item', 'list_item.id_permohonan = permohonan.id_permohonan');
+        $this->db->where('permohonan.id_permohonan', $id);
+        return $this->db->get()->result();
+    }
+    public function update_permohonan($id, $catatan){
+        $this->db->set('catatan', $catatan);
+        $this->db->where('id_permohonan', $id);
+        return $this->db->update('permohonan');
+    }
+    public function delete_list_item($id){
+        $this->db->where('id_permohonan', $id);
+        return $this->db->delete('list_item');
+    }
+    public function get_data_by_id($table, $id) 
+    {
         if($table == 'permohonan'){
             $this->db->select('*');
             $this->db->from('permohonan');
             $this->db->join('akun', 'akun.NRP = permohonan.nrp');
-            $this->db->where('permohonan.id', $id);
+            $this->db->where('permohonan.id_permohonan', $id);
         } else if($table == 'list_item'){
             $this->db->select('*');
             $this->db->from('list_item');
