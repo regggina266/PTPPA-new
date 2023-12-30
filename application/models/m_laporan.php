@@ -11,7 +11,7 @@ class m_laporan extends CI_Model
  // -- Delete data produk -- //
     public function delete($id)
     {
-        $this->db->where('id', $id);
+        $this->db->where('id_permohonan', $id);
         return $this->db->delete('permohonan');
     }
 
